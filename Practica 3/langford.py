@@ -10,6 +10,11 @@ def langford_directo(N,allsolutions):
             yield "-".join(map(str, seq))
         else:
 	    # COMPLETAR
+        # Cojer N y ir poniendo 2 N en diferentes posiciones del vector
+        for Pos in range (1,N+1):
+            seq[Pos] = num
+            seq[Pos+Pos+1] = num
+            #llama al back con mun-1 y vuelve ha poner seq[pos] y el otro ha 0
 
     if N%4 not in (0,3):
         yield "no hay solucion"
@@ -64,8 +69,10 @@ def langford_data_structure(N):
 	#Inicio Codigo Boletin
 	X = set([Value(i) for i in range(1,N+1)+[position(i) for i in range(2*N)])
 	Y = {}
-	for v in range(1,N+1):
-		#Fin Codigo boletin
+	for valor in range(1,N+1):
+        #Fin Codigo boletin
+        for posicion in range(2*N-(N+1)):		
+            Y[value(valor)+position(posicion)] = [value(valor),position(posicion),position(posicion+(valor+1))]
 
     # FIN COMPLETAR
 
