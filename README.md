@@ -1,5 +1,5 @@
 # ALG
-Practicas de Algoritmica de UPV año 2018-2019
+Practicas de Algoritmica de UPV año 2018-2019 Por adtenla
 
 1. Practica - Programación dinámica
    - (La subsecuencia creciente más larga) ✔
@@ -14,4 +14,10 @@ Practicas de Algoritmica de UPV año 2018-2019
      - Modo EXACT_COVER
      - Modo TODAS
 
+4. Practica - Algoritmos Voraces
 
+5. Practica - Ramificacion y Poda
+   - Problema de las N-Reinas
+     - Completar Poda implícita para calcular unos parametros (Boletin)
+     - implementar la Poda Explícita
+     - implementar el calculo de los parametros de la poda implícita a la poda Explícita
