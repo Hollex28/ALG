@@ -5,13 +5,23 @@ def langford_directo(N,allsolutions):
     N2   = 2*N
     seq  = [0]*N2
     
+    #Funcion añadida    
+    def is_promising(newPos,num):
+        return seq[newPos] == 0 and seq[newPos+num+1] == 0   
+   #Fin F Añadida 
     def backtracking(num):
         if num<=0:
             yield "-".join(map(str, seq))
         else:
-	    # COMPLETAR
+	    # Inicio Completar
+            for i in range(0,N2-num-1):
+                if is_promising(i,num):
+                    seq[i+num+1] = num
+                    seq[i] = num
+
+        #Fin completar
         # Cojer N y ir poniendo 2 N en diferentes posiciones del vector
-        for Pos in range (1,N+1):
+        for Pos in range (0,N):
             seq[Pos] = num
             seq[Pos+Pos+1] = num
             #llama al back con mun-1 y vuelve ha poner seq[pos] y el otro ha 0
@@ -67,13 +77,12 @@ def langford_data_structure(N):
         return sys.intern('p%d' % (i,))
 	# COMPLETAR
 	#Inicio Codigo Boletin
-	X = set([Value(i) for i in range(1,N+1)+[position(i) for i in range(2*N)])
-	Y = {}
-	for valor in range(1,N+1):
+    X = set([Value(i) for i in range(1,N+1)]+[position(i) for i in range(2*N)])
+    Y = {}
+    for valor in range(1,N+1):
         #Fin Codigo boletin
         for posicion in range(2*N-(N+1)):		
             Y[value(valor)+position(posicion)] = [value(valor),position(posicion),position(posicion+(valor+1))]
-
     # FIN COMPLETAR
 
     X = {j: set() for j in X}

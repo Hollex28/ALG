@@ -14,7 +14,7 @@ Practicas de Algoritmica de UPV año 2018-2019 Por adtenla
      - Modo EXACT_COVER
      - Modo TODAS
 
-4. Practica - Algoritmos Voraces
+4. Practica - Algoritmos Voraces ✔
 
 5. Practica - Ramificacion y Poda
    - Problema de las N-Reinas
