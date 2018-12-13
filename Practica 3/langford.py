@@ -80,8 +80,10 @@ def langford_data_structure(N):
     Y = {}
     for valor in range(1,N+1):
         #Fin Codigo boletin
-        for posicion in range(2*N-(N+1)):		
-            Y[value(valor)+position(posicion)] = [value(valor),position(posicion),position(posicion+(valor+1))]
+        for posicion in range(2*N):
+            if (posicion+valor+1 < 2*N):	
+                Y[value(valor)+position(posicion)] = [value(valor),position(posicion),position(posicion+(valor+1))]
+            #print(Y)
     # FIN COMPLETAR
 
     X = {j: set() for j in X}
