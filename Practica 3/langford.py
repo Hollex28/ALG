@@ -18,14 +18,13 @@ def langford_directo(N,allsolutions):
                 if is_promising(i,num):
                     seq[i+num+1] = num
                     seq[i] = num
+                    for next in backtracking(num-1):
+                        yield next
+                for elemento in range(len(seq)):
+                    if seq[elemento] == num:
+                        seq[elemento] = 0
 
         #Fin completar
-        # Cojer N y ir poniendo 2 N en diferentes posiciones del vector
-        for Pos in range (0,N):
-            seq[Pos] = num
-            seq[Pos+Pos+1] = num
-            #llama al back con mun-1 y vuelve ha poner seq[pos] y el otro ha 0
-
     if N%4 not in (0,3):
         yield "no hay solucion"
     else:
@@ -77,7 +76,7 @@ def langford_data_structure(N):
         return sys.intern('p%d' % (i,))
 	# COMPLETAR
 	#Inicio Codigo Boletin
-    X = set([Value(i) for i in range(1,N+1)]+[position(i) for i in range(2*N)])
+    X = set([value(i) for i in range(1,N+1)]+[position(i) for i in range(2*N)])
     Y = {}
     for valor in range(1,N+1):
         #Fin Codigo boletin
