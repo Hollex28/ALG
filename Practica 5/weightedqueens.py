@@ -50,15 +50,27 @@ def backtracking(N,weights):
 
 def optimisticSimple(s,weights,parentScore):
     # parentScore es el score del padre de s
-    opt = 0 # COMPLETAR, CALCULAR DE MANERA INCREMENTAL
+    filac = len(s)-1
+    opt = parentScore - min(weights[filac]) + weights[filac][s[-1]] # COMPLETAR, CALCULAR DE MANERA INCREMENTAL
     return opt
     
 def optimisticVert(s,weights,parentScore):
     Infty=2**30
+    ilac = len(s)-1
     # parte conocida:
-    opt = sum(weights[row,col] for row,col in enumerate(s))
-    # cota optimista de la parte que nos queda por completar:
-    # COMPLETAR, se aconseja usar min con un iterador y el argumetno default
+    opt = sum(weights[row,col] for row,col in enumerate(s)) #Me estan dando la parte conocida
+    # cota optimista de la parte que nos queda por completar(La desconocida):
+    # inicio COMPLETAR, se aconseja usar min con un iterador y el argumetno default
+    desc = 0;
+    Ncolumna = len(weights[0])-1 #mirar esto podria estar mal
+    for fila in range(len(s),len(weights)-1):
+        minimo=Infty
+        for columna in range(0,Ncolumna):
+            if !columna in s:
+                minimo=min(minimo,weights[fila][columna])
+        desc += minimo
+        #if columna no esta en s entonces calcular el minimo, sino ignorar <----------------------------MIRARI TE QUEDATE AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #fin Completar
     return opt
 
 def optimisticEllaborate(s,weights,parentScore):
