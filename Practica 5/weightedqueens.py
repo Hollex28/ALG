@@ -66,7 +66,7 @@ def optimisticVert(s,weights,parentScore):
     for fila in range(len(s),len(weights)-1):
         minimo=Infty
         for columna in range(0,Ncolumna):
-            if !columna in s:
+            if !(columna in s):
                 minimo=min(minimo,weights[fila][columna])
         desc += minimo
         #if columna no esta en s entonces calcular el minimo, sino ignorar <----------------------------MIRARI TE QUEDATE AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
