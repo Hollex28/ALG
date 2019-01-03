@@ -16,8 +16,8 @@ Practicas de Algoritmica de UPV año 2018-2019 Por adtenla
 
 4. Practica - Algoritmos Voraces ✔ 
 
-5. Practica - Ramificacion y Poda
-   - Problema de las N-Reinas
-     - Completar Poda implícita para calcular unos parametros (Boletin)
-     - implementar la Poda Explícita
-     - implementar el calculo de los parametros de la poda implícita a la poda Explícita
+5. Practica - Ramificacion y Poda ✔
+   - Problema de las N-Reinas ✔
+     - Completar Poda implícita para calcular unos parametros (Boletin) ✔
+     - implementar la Poda Explícita ✔
+     - implementar el calculo de los parametros de las cotas basica, vertical y diagonal ✔

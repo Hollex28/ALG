@@ -58,7 +58,7 @@ def optimisticVert(s,weights,parentScore):
     Infty=2**30
     ilac = len(s)-1
     # parte conocida:
-    opt = sum(weights[row,col] for row,col in enumerate(s)) #Me estan dando la parte conocida
+    opt = sum(weights[row,col] for row,col in enumerate(s))- min(weights[filac])#Me estan dando la parte conocida
     # cota optimista de la parte que nos queda por completar(La desconocida):
     # inicio COMPLETAR, se aconseja usar min con un iterador y el argumetno default
     desc = 0;
@@ -66,12 +66,12 @@ def optimisticVert(s,weights,parentScore):
     for fila in range(len(s),len(weights)-1):
         minimo=Infty
         for columna in range(0,Ncolumna):
-            if !(columna in s):
+            if not(columna in s):
                 minimo=min(minimo,weights[fila][columna])
         desc += minimo
         #if columna no esta en s entonces calcular el minimo, sino ignorar <----------------------------MIRARI TE QUEDATE AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #fin Completar
-    return opt
+    return opt+desc
 
 def optimisticEllaborate(s,weights,parentScore):
     Infty=2**30
@@ -101,9 +101,39 @@ def optimisticEllaborate(s,weights,parentScore):
     #    -------------
     # se consigue con r+c-(N-1)
     diag    = set()
-    # COMPLETAR!!!
-    opt = 0 # COMPLETAR!!!
-    return opt
+    # INICIO COMPLETAR!!!
+    ilac = len(s)-1
+    # parte conocida:
+    opt = sum(weights[row,col] for row,col in enumerate(s))- min(weights[filac])
+    Ncolumna = len(weights[0])-1 #mirar esto podria estar mal
+    for elem in s:
+        x=s.indexof(elem)
+        y=elem
+        fin = Ncolumna
+        if(x<y):
+            i=0
+            x=0
+            y=y-x
+            while(y>i):
+                diag.add((x+i,y+i))
+                i = i + 1
+        else:
+            i=0
+            y=0
+            x=x-y
+            while(x>i):
+                diag.add((x+i,y+i))
+                i = i + 1
+    desc = 0;
+    for fila in range(len(s),len(weights)-1):
+        minimo=Infty
+        for columna in range(0,Ncolumna):
+            if not(columna in s or (fila,columna) in diag):
+                minimo=min(minimo,weights[fila][columna])
+        desc += minimo
+    
+    #Fin completar
+    return opt + desc
 
 def branchAndBound(N,weights,
                    verbosity=0,
@@ -114,8 +144,15 @@ def branchAndBound(N,weights,
     assert((type(weights) is np.ndarray) and (weights.shape == (N,N)))
 
     def branch(s):
-        # COMPLETAR, solamente debe ramificar las columnas no amenazadas
-        return [s+[col] for col in range(N)]
+        # INICIO COMPLETAR, solamente debe ramificar las columnas no amenazadas
+        #res = []
+        #for col in range(N):
+        #    if col not in s:
+        #        res = res +[s+[col]]
+        #return res
+        return (s+[col] for col in range(N) if col not in s)
+        #FIN COMPLETAR
+        ##sustituido return [s+[col] for col in range(N)]
 
     def is_complete(s):
         return len(s)==N
@@ -133,11 +170,18 @@ def branchAndBound(N,weights,
         s = []
         opt = initial_score()
         heapq.heappush(A,(opt,s))
-
+        #Completar Contadores
+        iter = 0
+        maxA=0
+        #fin completar
         # bucle principal de ramificacion y poda con PODA IMPLICITA
         while len(A)>0 and A[0][0] < fx:
             score_s,s = heapq.heappop(A)
-            # COMPLETAR: contadores para que esto funcione
+            # INICIO COMPLETAR: contadores para que esto funcione
+            iter+=1
+            lenA=len(A)
+            maxA=max(maxA,lenA)
+            #FIN COMPLETAR
             # if verbosity > 1:
             #     print("Iter. %04d |A|=%05d max|A|=%05d fx=%04d len(s)=%02d score_s=%04d" % \
             #           (iter,lenA,maxA,fx,len(s),score_s))
@@ -167,14 +211,33 @@ def branchAndBound(N,weights,
         A = [] # empty priority queue
         x = None
         fx = pessimistic(N,weights)
-
+        maxA=0
         # anyadimos el estado inicial:
         s = []
         opt = initial_score()
         heapq.heappush(A,(opt,s))
-
+        iter = 0
         # bucle principal de ramificacion y poda con PODA EXPLICITA
-        # COMPLETAR
+        # INICIO COMPLETAR
+        while len(A) > 0:
+            score_s,s = heapq.heappop(A)
+            lenA=len(A)
+            iter += 1
+            maxA=max(maxA,lenA)
+            for child in branch(s):
+                if is_complete(child):
+                    opt_child = evaluate(child,weights)
+                    if opt_child < fx:
+                        x,fx = child, opt_child
+                        # PODA EXPLICITA
+                        A = [elem for elem in A if elem[0]<=fx] # eliminar de A los elementos >=fx
+                        heapq.heapify(A)
+
+                else:
+                    opt_child = optimistic(child,weights,score_s)
+                    if opt_child < fx: #poda cota optimistica
+                        heapq.heappush(A,(opt_child,child))
+        #FIN COMPOLETAR
         if verbosity > 0:
             print("%4d Iterations, max|A|=%05d" % (iter,maxA))
         return x,fx
